@@ -75,7 +75,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         login.target = self
         login.state = settings.launchAtLogin ? .on : .off
         menu.addItem(login)
-        let prefs =NSMenuItem(title: "Settings…", action: #selector(showSettings), keyEquivalent: ",")
+        let prefs = NSMenuItem(title: "Settings…", action: #selector(showSettings), keyEquivalent: ",")
         prefs.target = self
         menu.addItem(prefs)
         menu.addItem(NSMenuItem(title: "Quit Wiggle",
