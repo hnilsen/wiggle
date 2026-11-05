@@ -1,8 +1,10 @@
-name: Release
+name: Build
 
 on:
   push:
+    branches: [main]
     tags: ['v*']
+  pull_request:
 
 permissions:
   contents: write # needed to create the GitHub Release
@@ -13,13 +15,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+
       - name: Build universal Wiggle.app
-        run: UNIVERSAL=1 VERSION="${GITHUB_REF_NAME#v}" ./scripts/build-app.sh
+        run: |
+          set -o pipefail
+          VERSION="${GITHUB_REF_NAME#v}"
+          [[ "$GITHUB_REF_TYPE" == "tag" ]] || VERSION="0.0.0-dev"
+          UNIVERSAL=1 VERSION="$VERSION" ./scripts/build-app.sh 2>&1 | tee build.log
+
+      - name: Surface build errors
+        if: failure()
+        run: |
+          # Turn compiler errors into annotations (visible without log access).
+          grep -E "error:" build.log | sort -u | head -30 | while IFS= read -r line; do
+            echo "::error::$line"
+          done
+          echo "::error title=Build log tail::$(tail -25 build.log | sed 's/%/%25/g' | awk '{printf "%s%%0A", $0}')"
 
       - name: Zip app
+        if: github.ref_type == 'tag'
         run: ditto -c -k --keepParent build/Wiggle.app "build/Wiggle-${GITHUB_REF_NAME}.zip"
 
       - name: Create GitHub Release
+        if: github.ref_type == 'tag'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
