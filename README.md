@@ -19,6 +19,20 @@ open /Applications/Wiggle.app
 
 During development you can also run `swift run`.
 
+## Releases
+
+Pushing a tag starting with `v` builds a universal (Apple Silicon + Intel) app on
+GitHub Actions and attaches `Wiggle-<tag>.zip` to a GitHub Release:
+
+```sh
+git tag v1.0.0 && git push origin v1.0.0
+```
+
+The release build is ad-hoc signed, not notarized, so macOS blocks it the first
+time you open it. Either run `xattr -dr com.apple.quarantine /Applications/Wiggle.app`, or
+try to open it once, then click **Open Anyway** under
+**System Settings → Privacy & Security**.
+
 ## Accessibility permission
 
 Posting mouse events requires **System Settings → Privacy & Security → Accessibility**.
@@ -29,4 +43,8 @@ remove Wiggle from the Accessibility list and add it again (or toggle it off and
 
 ## Launch at login
 
-Add `Wiggle.app` under **System Settings → General → Login Items**.
+Enable **Start at Login** in the right-click menu or in Settings. Wiggle always starts
+switched **off** (at login and on every launch); click the worm to turn it on.
+
+This only works when running the bundled `Wiggle.app` (ideally from `/Applications`),
+not via `swift run`.

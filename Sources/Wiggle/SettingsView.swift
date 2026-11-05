@@ -7,6 +7,15 @@ struct SettingsView: View {
         VStack(alignment: .leading, spacing: 16) {
             Toggle("Wiggle the mouse to keep the screen awake", isOn: $settings.isEnabled)
 
+            VStack(alignment: .leading, spacing: 4) {
+                Toggle("Start Wiggle at login", isOn: $settings.launchAtLogin)
+                Text("Wiggle always starts switched off. Click the worm to turn it on.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
+            Divider()
+
             VStack(alignment: .leading, spacing: 6) {
                 Text("At least \(formatDuration(settings.minInterval)) between wiggles")
                 Slider(value: $settings.minInterval, in: Settings.intervalRange, step: 10)

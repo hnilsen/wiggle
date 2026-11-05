@@ -70,7 +70,12 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         menu.addItem(.separator())
-        let prefs = NSMenuItem(title: "Settings…", action: #selector(showSettings), keyEquivalent: ",")
+        settings.refreshLaunchAtLogin()
+        let login = NSMenuItem(title: "Start at Login", action: #selector(toggleLaunchAtLogin), keyEquivalent: "")
+        login.target = self
+        login.state = settings.launchAtLogin ? .on : .off
+        menu.addItem(login)
+        let prefs =NSMenuItem(title: "Settings…", action: #selector(showSettings), keyEquivalent: ",")
         prefs.target = self
         menu.addItem(prefs)
         menu.addItem(NSMenuItem(title: "Quit Wiggle",
@@ -79,6 +84,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     @objc private func toggleEnabled() { settings.isEnabled.toggle() }
+
+    @objc private func toggleLaunchAtLogin() { settings.launchAtLogin.toggle() }
 
     // MARK: - Icon animation
 
@@ -106,6 +113,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     // MARK: - Settings window
 
     @objc private func showSettings() {
+        settings.refreshLaunchAtLogin()
         if settingsWindow == nil {
             let host = NSHostingController(rootView: SettingsView(settings: settings))
             let window = NSWindow(contentViewController: host)
