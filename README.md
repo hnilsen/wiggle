@@ -1,7 +1,17 @@
-# Wiggle
+<p align="center">
+  <img src="docs/icon.svg" width="160" alt="Wiggle icon: a white worm on a green rounded square">
+</p>
 
-A tiny macOS menu bar app that nudges the mouse 1px (and back) every 1–2 minutes
-so the screen never sleeps or locks.
+<h1 align="center">Wiggle</h1>
+
+<p align="center">
+  A tiny macOS menu bar app that nudges the mouse 1px (and back) every 1–2 minutes
+  so the screen never sleeps or locks.
+</p>
+
+<p align="center">
+  <a href="https://github.com/hnilsen/wiggle/releases/latest"><b>Download the latest release</b></a>
+</p>
 
 - **Left-click** the worm icon to turn wiggling on/off. It wiggles while on and lies flat (dimmed) while off.
 - **Right-click** (or ctrl-click) for the menu: status and time to next wiggle, Settings…, Quit.
