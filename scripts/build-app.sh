@@ -21,6 +21,13 @@ mkdir -p "$APP/Contents/MacOS"
 cp "$BIN_DIR/Wiggle" "$APP/Contents/MacOS/Wiggle"
 cp Resources/Info.plist "$APP/Contents/Info.plist"
 
+# App icon (Finder / Launchpad / Login Items)
+ICONSET="build/AppIcon.iconset"
+rm -rf "$ICONSET"
+mkdir -p "$APP/Contents/Resources"
+swift scripts/make-icon.swift "$ICONSET"
+iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
+
 if [[ -n "${VERSION:-}" ]]; then
   /usr/libexec/PlistBuddy -c "Set :CFBundleShortVersionString $VERSION" "$APP/Contents/Info.plist"
   /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $VERSION" "$APP/Contents/Info.plist"
