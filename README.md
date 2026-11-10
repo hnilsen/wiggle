@@ -15,6 +15,10 @@
 
 - **Left-click** the worm icon to turn wiggling on/off. It wiggles while on and lies flat (dimmed) while off.
 - **Right-click** (or ctrl-click) for the menu: status and time to next wiggle, Settings…, Quit.
+- While on, Wiggle also holds a display-sleep power assertion (like a video player does), so the
+  screen saver and display sleep are blocked even if a wiggle comes late. The wiggle itself keeps
+  apps like Slack/Teams from marking you as away. No wiggle happens while the cursor sits in a
+  screen corner, to avoid triggering hot corners.
 - **Settings** lets you pick the min/max time between wiggles (10 s – 10 min). Each wiggle fires at a random time in that range.
 
 ## Build
